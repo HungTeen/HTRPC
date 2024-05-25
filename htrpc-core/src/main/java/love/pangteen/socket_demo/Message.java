@@ -1,4 +1,4 @@
-package love.pangteen.socket;
+package love.pangteen.socket_demo;
 
 import java.io.Serial;
 import java.io.Serializable;
