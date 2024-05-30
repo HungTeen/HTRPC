@@ -1,6 +1,6 @@
 package love.pangteen.remoting;
 
-import love.pangteen.registry.LocalServiceDiscovery;
+import love.pangteen.registry.local.LocalServiceDiscovery;
 import love.pangteen.remoting.dto.RpcRequest;
 import love.pangteen.remoting.transport.socket.SocketRpcClient;
 import love.pangteen.remoting.transport.socket.SocketRpcServer;

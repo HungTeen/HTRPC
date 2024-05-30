@@ -1,6 +1,7 @@
-package love.pangteen.registry;
+package love.pangteen.registry.local;
 
 import love.pangteen.constant.RpcProperties;
+import love.pangteen.registry.ServiceDiscovery;
 
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
