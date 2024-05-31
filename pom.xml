@@ -10,6 +10,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>htrpc-core</module>
+        <module>demo-test</module>
     </modules>
 
     <properties>

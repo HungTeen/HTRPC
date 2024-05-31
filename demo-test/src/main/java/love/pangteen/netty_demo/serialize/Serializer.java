@@ -1,4 +1,4 @@
-package love.pangteen.netty_demo;
+package love.pangteen.netty_demo.serialize;
 
 /**
  * @program: HTRPC

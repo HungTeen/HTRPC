@@ -1,4 +1,4 @@
-package love.pangteen.netty_demo;
+package love.pangteen.netty_demo.dto;
 
 import lombok.*;
 
@@ -12,6 +12,7 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 @ToString
-public class RpcResponse {
-    private String message;
+public class RpcRequest {
+    private String interfaceName;
+    private String methodName;
 }

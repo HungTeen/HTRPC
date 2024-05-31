@@ -1,8 +1,11 @@
-package love.pangteen.netty_demo;
+package love.pangteen.netty_demo.serialize;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
+import love.pangteen.netty_demo.SerializeException;
+import love.pangteen.netty_demo.dto.RpcRequest;
+import love.pangteen.netty_demo.dto.RpcResponse;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
