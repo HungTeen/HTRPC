@@ -26,6 +26,7 @@
         <cglib.version>3.3.0</cglib.version>
         <hutool.version>5.8.26</hutool.version>
         <nacos.version>2.1.2</nacos.version>
+        <spring.version>6.1.8</spring.version>
     </properties>
 
     <dependencies>
@@ -88,6 +89,11 @@
                 <groupId>com.alibaba.nacos</groupId>
                 <artifactId>nacos-client</artifactId>
                 <version>${nacos.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context</artifactId>
+                <version>${spring.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
