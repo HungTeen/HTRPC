@@ -1,0 +1,1 @@
+socket=love.pangteen.remoting.transport.socket.SocketRpcClient

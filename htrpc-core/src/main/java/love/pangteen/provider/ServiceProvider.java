@@ -1,5 +1,7 @@
 package love.pangteen.provider;
 
+import love.pangteen.config.RpcServiceConfig;
+
 /**
  * Store and provide services.
  * @program: HTRPC
@@ -8,10 +10,10 @@ package love.pangteen.provider;
  **/
 public interface ServiceProvider {
 
-//    /**
-//     * @param rpcServiceConfig rpc service related attributes
-//     */
-//    void addService(RpcServiceConfig rpcServiceConfig);
+    /**
+     * @param rpcServiceConfig rpc service related attributes
+     */
+    void addService(RpcServiceConfig rpcServiceConfig);
 
     /**
      * @param rpcServiceName rpc service name
@@ -19,8 +21,8 @@ public interface ServiceProvider {
      */
     Object getService(String rpcServiceName);
 
-//    /**
-//     * @param rpcServiceConfig rpc service related attributes
-//     */
-//    void publishService(RpcServiceConfig rpcServiceConfig);
+    /**
+     * @param rpcServiceConfig rpc service related attributes
+     */
+    void publishService(RpcServiceConfig rpcServiceConfig);
 }
