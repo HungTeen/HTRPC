@@ -1,9 +1,11 @@
 package love.pangteen.remoting.transport.socket;
 
+import love.pangteen.enums.ServiceDiscoveryTypes;
 import love.pangteen.exception.RpcException;
 import love.pangteen.registry.ServiceDiscovery;
 import love.pangteen.remoting.dto.RpcRequest;
 import love.pangteen.remoting.transport.RpcRequestTransport;
+import love.pangteen.utils.extension.ExtensionLoader;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -20,8 +22,12 @@ public class SocketRpcClient implements RpcRequestTransport {
 
     private final ServiceDiscovery serviceDiscovery;
 
+    public SocketRpcClient() {
+        this(ExtensionLoader.getExtensionLoader(ServiceDiscovery.class).getExtension(ServiceDiscoveryTypes.NACOS.getName()));
+    }
+
     public SocketRpcClient(ServiceDiscovery serviceDiscovery) {
-        this.serviceDiscovery = serviceDiscovery; // TODO Extension Loader.
+        this.serviceDiscovery = serviceDiscovery;
     }
 
     @Override
