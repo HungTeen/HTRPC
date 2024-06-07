@@ -1,0 +1,2 @@
+local=love.pangteen.provider.local.LocalServiceProvider
+nacos=love.pangteen.provider.nacos.NacosServiceProvider

@@ -3,7 +3,7 @@ package love.pangteen.remoting.transport.socket;
 import lombok.extern.slf4j.Slf4j;
 import love.pangteen.constant.RpcProperties;
 import love.pangteen.provider.ServiceProvider;
-import love.pangteen.provider.impl.ServiceProviderImpl;
+import love.pangteen.provider.local.LocalServiceProvider;
 import love.pangteen.utils.factory.SingletonFactory;
 import love.pangteen.utils.factory.ThreadPoolFactory;
 
@@ -28,7 +28,7 @@ public class SocketRpcServer {
 
     public SocketRpcServer() {
         this.threadPool = ThreadPoolFactory.createCustomThreadPoolIfAbsent("socket-server-rpc-pool");
-        this.serviceProvider = SingletonFactory.getInstance(ServiceProviderImpl.class);
+        this.serviceProvider = SingletonFactory.getInstance(LocalServiceProvider.class);
     }
 
     public void start(){

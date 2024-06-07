@@ -1,4 +1,4 @@
-package love.pangteen.registry.nacos;
+package love.pangteen.provider.nacos;
 
 import com.alibaba.nacos.api.PropertyKeyConst;
 import com.alibaba.nacos.api.exception.NacosException;

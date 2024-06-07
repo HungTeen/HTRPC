@@ -1,9 +1,9 @@
-package love.pangteen.registry.nacos;
+package love.pangteen.provider.nacos;
 
 import com.alibaba.nacos.api.exception.NacosException;
 import com.alibaba.nacos.api.naming.NamingService;
 import com.alibaba.nacos.api.naming.pojo.Instance;
-import love.pangteen.registry.ServiceDiscovery;
+import love.pangteen.provider.ServiceDiscovery;
 
 import java.net.InetSocketAddress;
 

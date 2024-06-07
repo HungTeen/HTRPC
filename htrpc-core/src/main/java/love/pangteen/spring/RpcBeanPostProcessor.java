@@ -5,12 +5,11 @@ import love.pangteen.annotations.HTRpcReference;
 import love.pangteen.annotations.HTRpcService;
 import love.pangteen.config.RpcServiceConfig;
 import love.pangteen.enums.RpcRequestTransportTypes;
+import love.pangteen.enums.ServiceProviderTypes;
 import love.pangteen.provider.ServiceProvider;
-import love.pangteen.provider.nacos.NacosServiceProvider;
 import love.pangteen.proxy.RpcClientProxy;
 import love.pangteen.remoting.transport.RpcRequestTransport;
 import love.pangteen.utils.extension.ExtensionLoader;
-import love.pangteen.utils.factory.SingletonFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.stereotype.Component;
@@ -30,7 +29,7 @@ public class RpcBeanPostProcessor implements BeanPostProcessor {
     private final RpcRequestTransport requestTransport;
 
     public RpcBeanPostProcessor() {
-        this.serviceProvider = SingletonFactory.getInstance(NacosServiceProvider.class);
+        this.serviceProvider = ExtensionLoader.getExtensionLoader(ServiceProvider.class).getExtension(ServiceProviderTypes.NACOS.getName());
         this.requestTransport = ExtensionLoader.getExtensionLoader(RpcRequestTransport.class).getExtension(RpcRequestTransportTypes.SOCKET.getName());
     }
 

@@ -1,8 +1,8 @@
-package love.pangteen.registry;
+package love.pangteen.provider;
 
 import love.pangteen.constant.RpcProperties;
-import love.pangteen.registry.nacos.NacosServiceDiscovery;
-import love.pangteen.registry.nacos.NacosServiceRegistry;
+import love.pangteen.provider.nacos.NacosServiceDiscovery;
+import love.pangteen.provider.nacos.NacosServiceRegistry;
 import love.pangteen.utils.Util;
 import org.junit.Assert;
 import org.junit.Test;

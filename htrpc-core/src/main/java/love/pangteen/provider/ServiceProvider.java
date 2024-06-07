@@ -1,5 +1,6 @@
 package love.pangteen.provider;
 
+import love.pangteen.annotations.SPI;
 import love.pangteen.config.RpcServiceConfig;
 
 /**
@@ -8,12 +9,8 @@ import love.pangteen.config.RpcServiceConfig;
  * @author: PangTeen
  * @create: 2024/5/26 9:52
  **/
+@SPI
 public interface ServiceProvider {
-
-    /**
-     * @param rpcServiceConfig rpc service related attributes
-     */
-    void addService(RpcServiceConfig rpcServiceConfig);
 
     /**
      * @param rpcServiceName rpc service name

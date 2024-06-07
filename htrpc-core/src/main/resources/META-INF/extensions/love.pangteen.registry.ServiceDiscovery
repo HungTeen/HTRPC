@@ -1,2 +1,0 @@
-local=love.pangteen.registry.local.LocalServiceDiscovery
-nacos=love.pangteen.registry.nacos.NacosServiceDiscovery

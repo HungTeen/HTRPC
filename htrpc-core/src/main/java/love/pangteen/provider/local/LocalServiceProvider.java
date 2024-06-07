@@ -1,4 +1,4 @@
-package love.pangteen.provider.impl;
+package love.pangteen.provider.local;
 
 import love.pangteen.config.RpcServiceConfig;
 import love.pangteen.provider.ServiceProvider;
@@ -11,17 +11,12 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author: PangTeen
  * @create: 2024/5/26 10:50
  **/
-public class ServiceProviderImpl implements ServiceProvider {
+public class LocalServiceProvider implements ServiceProvider {
 
     private final Map<String, Object> serviceMap;
 
-    public ServiceProviderImpl() {
+    public LocalServiceProvider() {
         this.serviceMap = new ConcurrentHashMap<>();
-    }
-
-    @Override
-    public void addService(RpcServiceConfig rpcServiceConfig) {
-
     }
 
     @Override

@@ -12,6 +12,8 @@
         <module>htrpc-core</module>
         <module>demo-test</module>
         <module>htrpc-example-client</module>
+        <module>htrpc-example-api</module>
+        <module>htrpc-example-server</module>
     </modules>
 
     <properties>

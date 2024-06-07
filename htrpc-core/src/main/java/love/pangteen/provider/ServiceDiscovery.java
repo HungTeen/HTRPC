@@ -1,4 +1,4 @@
-package love.pangteen.registry;
+package love.pangteen.provider;
 
 import love.pangteen.annotations.SPI;
 

@@ -1,6 +1,6 @@
 package love.pangteen.extension;
 
-import love.pangteen.registry.ServiceDiscovery;
+import love.pangteen.provider.ServiceDiscovery;
 import love.pangteen.utils.extension.ExtensionLoader;
 import org.junit.Assert;
 import org.junit.Test;

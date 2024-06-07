@@ -1,4 +1,6 @@
-package love.pangteen.registry;
+package love.pangteen.provider;
+
+import love.pangteen.annotations.SPI;
 
 import java.net.InetSocketAddress;
 
@@ -8,6 +10,7 @@ import java.net.InetSocketAddress;
  * @author: PangTeen
  * @create: 2024/5/29 15:28
  **/
+@SPI
 public interface ServiceRegistry {
 
     /**

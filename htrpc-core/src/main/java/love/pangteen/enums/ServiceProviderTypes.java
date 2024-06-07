@@ -10,7 +10,9 @@ import lombok.Getter;
  **/
 @Getter
 @AllArgsConstructor
-public enum ServiceDiscoveryTypes {
+public enum ServiceProviderTypes {
+
+    LOCAL("local"),
 
     NACOS("nacos"),
 
