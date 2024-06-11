@@ -58,10 +58,10 @@ public class ThreadPoolFactory {
         if (threadNamePrefix != null) {
             if (daemon != null) {
                 return new ThreadFactoryBuilder()
-                        .setNamePrefix(threadNamePrefix + "-%d")
+                        .setNamePrefix(threadNamePrefix + "-")
                         .setDaemon(daemon).build();
             } else {
-                return new ThreadFactoryBuilder().setNamePrefix(threadNamePrefix + "-%d").build();
+                return new ThreadFactoryBuilder().setNamePrefix(threadNamePrefix + "-").build();
             }
         }
         return Executors.defaultThreadFactory();

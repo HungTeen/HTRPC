@@ -6,18 +6,17 @@ import lombok.Getter;
 /**
  * @program: HTRPC
  * @author: PangTeen
- * @create: 2024/6/6 17:19
+ * @create: 2024/6/6 15:08
  **/
 @Getter
 @AllArgsConstructor
-public enum ServiceProviderTypes {
+public enum RpcRequestTransportType {
 
-    LOCAL("local"),
+    SOCKET("socket"),
 
-    NACOS("nacos"),
+    NETTY("netty"),
 
     ;
 
     private final String name;
-
 }

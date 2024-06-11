@@ -1,5 +1,7 @@
 package love.pangteen.utils;
 
+import love.pangteen.constant.Constants;
+
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
@@ -17,6 +19,10 @@ public class Util {
         } catch (UnknownHostException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static boolean isHeartBeat(byte messageType){
+        return messageType == Constants.HEARTBEAT_REQUEST_TYPE || messageType == Constants.HEARTBEAT_RESPONSE_TYPE;
     }
 
 }

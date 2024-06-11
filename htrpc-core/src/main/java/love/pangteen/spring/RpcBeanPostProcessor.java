@@ -4,8 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import love.pangteen.annotations.HTRpcReference;
 import love.pangteen.annotations.HTRpcService;
 import love.pangteen.config.RpcServiceConfig;
-import love.pangteen.enums.RpcRequestTransportTypes;
-import love.pangteen.enums.ServiceProviderTypes;
+import love.pangteen.enums.RpcRequestTransportType;
+import love.pangteen.enums.ServiceProviderType;
 import love.pangteen.provider.ServiceProvider;
 import love.pangteen.proxy.RpcClientProxy;
 import love.pangteen.remoting.transport.RpcRequestTransport;
@@ -29,8 +29,8 @@ public class RpcBeanPostProcessor implements BeanPostProcessor {
     private final RpcRequestTransport requestTransport;
 
     public RpcBeanPostProcessor() {
-        this.serviceProvider = ExtensionLoader.getExtensionLoader(ServiceProvider.class).getExtension(ServiceProviderTypes.NACOS.getName());
-        this.requestTransport = ExtensionLoader.getExtensionLoader(RpcRequestTransport.class).getExtension(RpcRequestTransportTypes.SOCKET.getName());
+        this.serviceProvider = ExtensionLoader.getExtensionLoader(ServiceProvider.class).getExtension(ServiceProviderType.NACOS.getName());
+        this.requestTransport = ExtensionLoader.getExtensionLoader(RpcRequestTransport.class).getExtension(RpcRequestTransportType.SOCKET.getName());
     }
 
     @Override

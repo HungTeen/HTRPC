@@ -1,7 +1,7 @@
 package love.pangteen.remoting.transport;
 
 import lombok.extern.slf4j.Slf4j;
-import love.pangteen.enums.ServiceProviderTypes;
+import love.pangteen.enums.ServiceProviderType;
 import love.pangteen.provider.ServiceProvider;
 import love.pangteen.remoting.dto.RpcRequest;
 import love.pangteen.utils.extension.ExtensionLoader;
@@ -20,7 +20,7 @@ public class RpcRequestHandler {
     private final ServiceProvider serviceProvider;
 
     public RpcRequestHandler() {
-        this.serviceProvider = ExtensionLoader.getExtensionLoader(ServiceProvider.class).getExtension(ServiceProviderTypes.NACOS.getName());
+        this.serviceProvider = ExtensionLoader.getExtensionLoader(ServiceProvider.class).getExtension(ServiceProviderType.NACOS.getName());
     }
 
     /**

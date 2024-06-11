@@ -1,0 +1,1 @@
+kryo=love.pangteen.codec.serialize.kryo.KryoSerializer
