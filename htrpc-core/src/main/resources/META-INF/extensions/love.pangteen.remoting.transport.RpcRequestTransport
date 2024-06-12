@@ -1,1 +1,2 @@
 socket=love.pangteen.remoting.transport.socket.SocketRpcClient
+netty=love.pangteen.remoting.transport.netty.client.NettyRpcClient

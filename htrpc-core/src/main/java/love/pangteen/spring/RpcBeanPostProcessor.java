@@ -30,7 +30,7 @@ public class RpcBeanPostProcessor implements BeanPostProcessor {
 
     public RpcBeanPostProcessor() {
         this.serviceProvider = ExtensionLoader.getExtensionLoader(ServiceProvider.class).getExtension(ServiceProviderType.NACOS.getName());
-        this.requestTransport = ExtensionLoader.getExtensionLoader(RpcRequestTransport.class).getExtension(RpcRequestTransportType.SOCKET.getName());
+        this.requestTransport = ExtensionLoader.getExtensionLoader(RpcRequestTransport.class).getExtension(RpcRequestTransportType.NETTY.getName());
     }
 
     @Override

@@ -68,6 +68,24 @@ public class ThreadPoolFactory {
     }
 
     /**
+     * shutDown 所有线程池
+     */
+    public static void shutDownAllThreadPool() {
+        log.info("call shutDownAllThreadPool method");
+        THREAD_POOLS.entrySet().parallelStream().forEach(entry -> {
+            ExecutorService executorService = entry.getValue();
+            executorService.shutdown();
+            log.info("shut down thread pool [{}] [{}]", entry.getKey(), executorService.isTerminated());
+            try {
+                executorService.awaitTermination(10, TimeUnit.SECONDS);
+            } catch (InterruptedException e) {
+                log.error("Thread pool never terminated");
+                executorService.shutdownNow();
+            }
+        });
+    }
+
+    /**
      * 打印线程池的状态。
      *
      * @param threadPool 线程池对象。

@@ -9,11 +9,13 @@ import love.pangteen.exception.RpcException;
 import love.pangteen.remoting.dto.RpcRequest;
 import love.pangteen.remoting.dto.RpcResponse;
 import love.pangteen.remoting.transport.RpcRequestTransport;
+import love.pangteen.remoting.transport.netty.client.NettyRpcClient;
 import love.pangteen.remoting.transport.socket.SocketRpcClient;
 import love.pangteen.utils.factory.ProxyFactory;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * @program: HTRPC
@@ -52,8 +54,10 @@ public class RpcClientProxy implements InvocationHandler {
         RpcResponse<Object> response = null;
         if (transport instanceof SocketRpcClient socketRpcClient) {
             response = (RpcResponse<Object>) socketRpcClient.sendRpcRequest(request);
+        } else if(transport instanceof NettyRpcClient nettyRpcClient){
+            CompletableFuture<RpcResponse<Object>> completableFuture = (CompletableFuture<RpcResponse<Object>>) nettyRpcClient.sendRpcRequest(request);
+            response = completableFuture.get();
         }
-        // TODO Netty异步调用。
         check(request, response);
         return response.getData();
     }

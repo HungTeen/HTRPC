@@ -1,0 +1,1 @@
+gzip=love.pangteen.codec.compress.gzip.GzipCompress

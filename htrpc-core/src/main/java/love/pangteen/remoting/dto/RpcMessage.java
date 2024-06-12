@@ -3,6 +3,7 @@ package love.pangteen.remoting.dto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @program: HTRPC
@@ -11,6 +12,7 @@ import lombok.Data;
  **/
 @Data
 @Builder
+@NoArgsConstructor
 @AllArgsConstructor
 public class RpcMessage {
 

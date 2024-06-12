@@ -25,4 +25,12 @@ public class Util {
         return messageType == Constants.HEARTBEAT_REQUEST_TYPE || messageType == Constants.HEARTBEAT_RESPONSE_TYPE;
     }
 
+    public static boolean isResponse(byte messageType){
+        return messageType == Constants.RESPONSE_TYPE || messageType == Constants.HEARTBEAT_RESPONSE_TYPE;
+    }
+
+    public static boolean isRequest(byte messageType){
+        return messageType == Constants.REQUEST_TYPE || messageType == Constants.HEARTBEAT_REQUEST_TYPE;
+    }
+
 }

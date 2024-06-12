@@ -17,13 +17,13 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * <p>
- * custom protocol decoder
+ * custom protocol encoder
  * <p>
  * <pre>
- *   0     1     2     3     4        5     6     7     8         9          10      11     12  13  14   15 16
- *   +-----+-----+-----+-----+--------+----+----+----+------+-----------+-------+--------+-----+-----+-------+
+ *   0     1     2     3     4        5    6    7    8      9           10      11       12    13   14   15 16
+ *   +-----+-----+-----+-----+--------+----+----+----+------+-----------+-------+--------+-----+----+----+---+
  *   |   magic   code        |version | full length         |messageType| codec |compress|    RequestId      |
- *   +-----------------------+--------+---------------------+-----------+-----------+-----------+------------+
+ *   +-----------------------+--------+---------------------+-----------+-------+--------+-------------------+
  *   |                                                                                                       |
  *   |                                         body                                                          |
  *   |                                                                                                       |
@@ -64,10 +64,13 @@ public class RpcMessageEncoder extends MessageToByteEncoder<RpcMessage> {
                 bodyBytes = serializer.serialize(msg.getData());
 
                 // compress the bytes.
+                int length = bodyBytes.length;
                 String compressName = CompressType.getName(msg.getCompressType());
                 Compress compress = ExtensionLoader.getExtensionLoader(Compress.class)
                         .getExtension(compressName);
                 bodyBytes = compress.compress(bodyBytes);
+                log.info("compressName: [{}], original length: [{}], compressed length: [{}]",
+                        compressName, length, bodyBytes.length);
                 fullLength += bodyBytes.length;
             }
 
