@@ -42,7 +42,7 @@ public class NettyRpcClient implements RpcRequestTransport {
     private final EventLoopGroup eventLoopGroup;
     private final Bootstrap bootstrap;
 
-    public NettyRpcClient(){
+    public NettyRpcClient() {
         this.serviceDiscovery = ExtensionLoader.getExtensionLoader(ServiceDiscovery.class).getExtension(ServiceProviderType.NACOS.getName());
         this.eventLoopGroup = new NioEventLoopGroup();
         this.bootstrap = new Bootstrap();
@@ -60,6 +60,7 @@ public class NettyRpcClient implements RpcRequestTransport {
                         pipeline.addLast(new IdleStateHandler(0, 5, 0, TimeUnit.SECONDS));
                         pipeline.addLast(new RpcMessageEncoder());
                         pipeline.addLast(new RpcMessageDecoder());
+                        pipeline.addLast(new NettyRpcClientHandler());
                     }
                 });
     }
@@ -70,7 +71,7 @@ public class NettyRpcClient implements RpcRequestTransport {
         CompletableFuture<RpcResponse<Object>> resultFuture = new CompletableFuture<>();
         InetSocketAddress address = this.serviceDiscovery.lookupService(rpcRequest.getRpcServiceName());
         Channel channel = getChannel(address);
-        if(channel.isActive()){
+        if (channel.isActive()) {
             put(rpcRequest.getRequestId(), resultFuture);
             RpcMessage message = RpcMessage.builder()
                     .data(rpcRequest)
@@ -80,9 +81,9 @@ public class NettyRpcClient implements RpcRequestTransport {
                     .build();
             ChannelFuture channelFuture = channel.writeAndFlush(message);
             channelFuture.addListener((ChannelFutureListener) future -> {
-                if(future.isSuccess()){
+                if (future.isSuccess()) {
                     log.info("The client has sent the message: [{}]", rpcRequest);
-                } else{
+                } else {
                     future.channel().close();
                     resultFuture.completeExceptionally(future.cause());
                 }
@@ -94,37 +95,37 @@ public class NettyRpcClient implements RpcRequestTransport {
     }
 
     @SneakyThrows
-    public Channel doConnect(InetSocketAddress address){
+    public Channel doConnect(InetSocketAddress address) {
         CompletableFuture<Channel> completableFuture = new CompletableFuture<>();
         bootstrap.connect(address).addListener((ChannelFutureListener) future -> {
-            if(future.isSuccess()){
+            if (future.isSuccess()) {
                 log.info("The client has connected [{}] successfully!", address.toString());
                 completableFuture.complete(future.channel());
-            }else{
+            } else {
                 log.info("The client failed to connect [{}]!", address.toString());
             }
         });
         return completableFuture.get();
     }
 
-    public Channel getChannel(InetSocketAddress address){
+    public Channel getChannel(InetSocketAddress address) {
         Channel channel = ChannelManager.getChannel(address);
-        if(channel == null){
+        if (channel == null) {
             channel = doConnect(address);
             ChannelManager.setChannel(address, channel);
         }
         return channel;
     }
 
-    public static void put(String requestId, CompletableFuture<RpcResponse<Object>> future){
+    public static void put(String requestId, CompletableFuture<RpcResponse<Object>> future) {
         REQUEST_MAP.put(requestId, future);
     }
 
-    public static void complete(RpcResponse<Object> rpcResponse){
+    public static void complete(RpcResponse<Object> rpcResponse) {
         CompletableFuture<RpcResponse<Object>> future = REQUEST_MAP.remove(rpcResponse.getRequestId());
-        if(future != null){
+        if (future != null) {
             future.complete(rpcResponse);
-        } else{
+        } else {
             throw new IllegalStateException();
         }
     }

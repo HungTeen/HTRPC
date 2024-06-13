@@ -12,8 +12,6 @@ import love.pangteen.remoting.dto.RpcMessage;
 import love.pangteen.remoting.dto.RpcResponse;
 import love.pangteen.utils.Util;
 
-import java.net.InetSocketAddress;
-
 /**
  * Customize the client ChannelHandler to process the data sent by the server
  *
@@ -59,8 +57,8 @@ public class NettyRpcClientHandler extends ChannelInboundHandlerAdapter {
                         .messageType(Constants.HEARTBEAT_REQUEST_TYPE)
                         .data(Constants.PING)
                         .build();
-                Channel channel = ChannelManager.getChannel((InetSocketAddress) ctx.channel().remoteAddress());
-                Channel anotherChannel = ctx.channel();
+//                Channel channel = ChannelManager.getChannel((InetSocketAddress) ctx.channel().remoteAddress());
+                Channel channel = ctx.channel();
                 channel.writeAndFlush(pingMessage).addListener(ChannelFutureListener.CLOSE_ON_FAILURE);
             }
         } else {
@@ -74,4 +72,5 @@ public class NettyRpcClientHandler extends ChannelInboundHandlerAdapter {
         cause.printStackTrace();
         ctx.close();
     }
+
 }
