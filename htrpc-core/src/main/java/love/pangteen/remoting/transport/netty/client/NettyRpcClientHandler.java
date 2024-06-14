@@ -6,8 +6,7 @@ import io.netty.handler.timeout.IdleStateEvent;
 import io.netty.util.ReferenceCountUtil;
 import lombok.extern.slf4j.Slf4j;
 import love.pangteen.constant.Constants;
-import love.pangteen.enums.CompressType;
-import love.pangteen.enums.SerializationType;
+import love.pangteen.constant.RpcProperties;
 import love.pangteen.remoting.dto.RpcMessage;
 import love.pangteen.remoting.dto.RpcResponse;
 import love.pangteen.utils.Util;
@@ -52,8 +51,8 @@ public class NettyRpcClientHandler extends ChannelInboundHandlerAdapter {
             if(idleStateEvent.state() == IdleState.WRITER_IDLE){
                 log.info("write idle happen [{}]", ctx.channel().remoteAddress());
                 RpcMessage pingMessage = RpcMessage.builder()
-                        .codec(SerializationType.KRYO.getCode())
-                        .compressType(CompressType.GZIP.getCode())
+                        .codec(RpcProperties.SERIALIZATION_TYPE.getCode())
+                        .compressType(RpcProperties.COMPRESS_TYPE.getCode())
                         .messageType(Constants.HEARTBEAT_REQUEST_TYPE)
                         .data(Constants.PING)
                         .build();

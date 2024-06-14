@@ -13,9 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import love.pangteen.codec.RpcMessageDecoder;
 import love.pangteen.codec.RpcMessageEncoder;
 import love.pangteen.constant.Constants;
-import love.pangteen.enums.CompressType;
-import love.pangteen.enums.SerializationType;
-import love.pangteen.enums.ServiceProviderType;
+import love.pangteen.constant.RpcProperties;
 import love.pangteen.provider.ServiceDiscovery;
 import love.pangteen.remoting.dto.RpcMessage;
 import love.pangteen.remoting.dto.RpcRequest;
@@ -43,7 +41,7 @@ public class NettyRpcClient implements RpcRequestTransport {
     private final Bootstrap bootstrap;
 
     public NettyRpcClient() {
-        this.serviceDiscovery = ExtensionLoader.getExtensionLoader(ServiceDiscovery.class).getExtension(ServiceProviderType.NACOS.getName());
+        this.serviceDiscovery = ExtensionLoader.getExtensionLoader(ServiceDiscovery.class).getExtension(RpcProperties.SERVICE_PROVIDER_TYPE.getName());
         this.eventLoopGroup = new NioEventLoopGroup();
         this.bootstrap = new Bootstrap();
         this.bootstrap.group(this.eventLoopGroup)
@@ -75,8 +73,8 @@ public class NettyRpcClient implements RpcRequestTransport {
             put(rpcRequest.getRequestId(), resultFuture);
             RpcMessage message = RpcMessage.builder()
                     .data(rpcRequest)
-                    .codec(SerializationType.KRYO.getCode())
-                    .compressType(CompressType.GZIP.getCode())
+                    .codec(RpcProperties.SERIALIZATION_TYPE.getCode())
+                    .compressType(RpcProperties.COMPRESS_TYPE.getCode())
                     .messageType(Constants.REQUEST_TYPE)
                     .build();
             ChannelFuture channelFuture = channel.writeAndFlush(message);

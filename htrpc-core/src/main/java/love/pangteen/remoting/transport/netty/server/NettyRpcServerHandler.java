@@ -8,9 +8,8 @@ import io.netty.handler.timeout.IdleStateEvent;
 import io.netty.util.ReferenceCountUtil;
 import lombok.extern.slf4j.Slf4j;
 import love.pangteen.constant.Constants;
-import love.pangteen.enums.CompressType;
+import love.pangteen.constant.RpcProperties;
 import love.pangteen.enums.RpcResult;
-import love.pangteen.enums.SerializationType;
 import love.pangteen.remoting.dto.RpcMessage;
 import love.pangteen.remoting.dto.RpcRequest;
 import love.pangteen.remoting.dto.RpcResponse;
@@ -38,8 +37,8 @@ public class NettyRpcServerHandler extends ChannelInboundHandlerAdapter {
             if (msg instanceof RpcMessage message) {
                 if (Util.isRequest(message.getMessageType())) {
                     RpcMessage.RpcMessageBuilder responseBuilder = RpcMessage.builder()
-                            .codec(SerializationType.KRYO.getCode())
-                            .compressType(CompressType.GZIP.getCode());
+                            .codec(RpcProperties.SERIALIZATION_TYPE.getCode())
+                            .compressType(RpcProperties.COMPRESS_TYPE.getCode());
                     if (message.getMessageType() == Constants.HEARTBEAT_REQUEST_TYPE) {
                         log.info("heart [{}]", message.getData());
                         responseBuilder.messageType(Constants.HEARTBEAT_RESPONSE_TYPE).data(Constants.PONG);

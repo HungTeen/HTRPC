@@ -4,7 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import love.pangteen.config.RpcServiceConfig;
 import love.pangteen.constant.RpcProperties;
 import love.pangteen.enums.RpcErrorMessage;
-import love.pangteen.enums.ServiceProviderType;
 import love.pangteen.exception.RpcException;
 import love.pangteen.provider.ServiceProvider;
 import love.pangteen.provider.ServiceRegistry;
@@ -27,7 +26,7 @@ public class NacosServiceProvider implements ServiceProvider {
 
     public NacosServiceProvider() {
         this.serviceMap = new ConcurrentHashMap<>();
-        this.serviceRegistry = ExtensionLoader.getExtensionLoader(ServiceRegistry.class).getExtension(ServiceProviderType.NACOS.getName());
+        this.serviceRegistry = ExtensionLoader.getExtensionLoader(ServiceRegistry.class).getExtension(RpcProperties.SERVICE_PROVIDER_TYPE.getName());
     }
 
     @Override
