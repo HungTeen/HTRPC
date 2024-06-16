@@ -14,6 +14,7 @@
         <module>htrpc-example-client</module>
         <module>htrpc-example-api</module>
         <module>htrpc-example-server</module>
+        <module>htrpc-spring-boot</module>
     </modules>
 
     <properties>
@@ -30,6 +31,8 @@
         <hutool.version>5.8.26</hutool.version>
         <nacos.version>2.1.2</nacos.version>
         <spring.version>6.1.8</spring.version>
+        <spring.supporter.version>1.0.11</spring.supporter.version>
+        <spring-boot.version>3.3.0</spring-boot.version>
     </properties>
 
     <dependencies>
@@ -98,6 +101,12 @@
                 <artifactId>spring-context</artifactId>
                 <version>${spring.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.alibaba.spring</groupId>
+                <artifactId>spring-context-support</artifactId>
+                <version>${spring.supporter.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 

@@ -12,6 +12,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum CompressType {
 
+    IGNORE((byte) 0x00, "ignore"),
+
     GZIP((byte) 0x01, "gzip"),
 
     ;

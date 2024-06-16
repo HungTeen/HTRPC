@@ -14,7 +14,7 @@ public interface RpcProperties {
 
     int PORT = 9999;
 
-    CompressType COMPRESS_TYPE = CompressType.GZIP;
+    CompressType COMPRESS_TYPE = CompressType.IGNORE;
 
     RpcRequestTransportType RPC_REQUEST_TRANSPORT_TYPE = RpcRequestTransportType.NETTY;
 
