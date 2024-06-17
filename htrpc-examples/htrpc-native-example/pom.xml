@@ -5,15 +5,15 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>love.pangteen</groupId>
-        <artifactId>HTRPC</artifactId>
+        <artifactId>htrpc-examples</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>htrpc-spring-boot</artifactId>
+    <artifactId>htrpc-native-example</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>htrpc-spring-boot-autoconfig</module>
-        <module>htrpc-spring-boot-starter</module>
+        <module>htrpc-native-server</module>
+        <module>htrpc-native-client</module>
     </modules>
 
     <properties>
@@ -22,17 +22,16 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-    <dependencyManagement>
-        <dependencies>
-            <!-- Spring Boot -->
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-dependencies</artifactId>
-                <version>${spring-boot.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
+    <dependencies>
+        <dependency>
+            <groupId>love.pangteen</groupId>
+            <artifactId>htrpc-example-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>love.pangteen</groupId>
+            <artifactId>htrpc-core</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>

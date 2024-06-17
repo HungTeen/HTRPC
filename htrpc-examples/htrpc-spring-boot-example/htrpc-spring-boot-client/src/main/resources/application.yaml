@@ -1,0 +1,6 @@
+htrpc:
+  registry-center-address: localhost
+  registry-center-port: 8848
+  registry-center-namespace: public
+  service-port: 9999
+  service-provider-type: nacos

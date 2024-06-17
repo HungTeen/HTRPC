@@ -9,11 +9,12 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>htrpc-spring-boot</artifactId>
+    <artifactId>htrpc-examples</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>htrpc-spring-boot-autoconfig</module>
-        <module>htrpc-spring-boot-starter</module>
+        <module>htrpc-native-example</module>
+        <module>htrpc-spring-boot-example</module>
+        <module>htrpc-example-api</module>
     </modules>
 
     <properties>
@@ -24,13 +25,15 @@
 
     <dependencyManagement>
         <dependencies>
-            <!-- Spring Boot -->
             <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-dependencies</artifactId>
-                <version>${spring-boot.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
+                <groupId>love.pangteen</groupId>
+                <artifactId>htrpc-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>love.pangteen</groupId>
+                <artifactId>htrpc-spring-boot-starter</artifactId>
+                <version>${project.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

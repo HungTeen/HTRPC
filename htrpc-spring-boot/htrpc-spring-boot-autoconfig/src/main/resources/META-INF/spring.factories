@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+love.pangteen.HTRpcBeanRegister\
+  love.pangteen.HTRpcBeanInject
