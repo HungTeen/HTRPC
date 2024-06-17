@@ -1,9 +1,8 @@
 package love.pangteen.provider;
 
-import love.pangteen.constant.RpcProperties;
+import love.pangteen.config.ConfigManager;
 import love.pangteen.provider.nacos.NacosServiceDiscovery;
 import love.pangteen.provider.nacos.NacosServiceRegistry;
-import love.pangteen.utils.Util;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -19,7 +18,7 @@ public class NacosServiceTest {
     @Test
     public void registerService() {
         final String serviceName = "Test Service";
-        InetSocketAddress serviceAddress = Util.localAddress(RpcProperties.PORT);
+        InetSocketAddress serviceAddress = ConfigManager.localRpcServiceAddress();
 
         NacosServiceRegistry registry = new NacosServiceRegistry();
         registry.registerService(serviceName, serviceAddress);

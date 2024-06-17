@@ -4,6 +4,7 @@ import com.alibaba.nacos.api.PropertyKeyConst;
 import com.alibaba.nacos.api.exception.NacosException;
 import com.alibaba.nacos.api.naming.NamingFactory;
 import com.alibaba.nacos.api.naming.NamingService;
+import love.pangteen.config.ConfigManager;
 
 import java.util.Properties;
 
@@ -19,8 +20,8 @@ public class NacosManager {
         try {
             Properties properties = new Properties();
             // 多个地址使用逗号隔开
-            properties.setProperty(PropertyKeyConst.SERVER_ADDR, "127.0.0.1:8848");
-            properties.setProperty(PropertyKeyConst.NAMESPACE, "public");
+            properties.setProperty(PropertyKeyConst.SERVER_ADDR, ConfigManager.getRegistryAddressWithPort());
+            properties.setProperty(PropertyKeyConst.NAMESPACE, ConfigManager.getConfig().getRegistryCenterNamespace());
 //            properties.put(PropertyKeyConst.USERNAME, "nacos");
 //            properties.put(PropertyKeyConst.PASSWORD, "nacos");
             naming = NamingFactory.createNamingService(properties);

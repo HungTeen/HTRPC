@@ -13,8 +13,7 @@ import io.netty.util.concurrent.DefaultEventExecutorGroup;
 import lombok.extern.slf4j.Slf4j;
 import love.pangteen.codec.RpcMessageDecoder;
 import love.pangteen.codec.RpcMessageEncoder;
-import love.pangteen.constant.RpcProperties;
-import love.pangteen.utils.Util;
+import love.pangteen.config.ConfigManager;
 import love.pangteen.utils.factory.ThreadPoolFactory;
 
 import java.util.concurrent.TimeUnit;
@@ -58,7 +57,7 @@ public class NettyRpcServer {
                             pipeline.addLast(serviceGroup, new NettyRpcServerHandler());
                         }
                     });
-            ChannelFuture future = bootstrap.bind(Util.localAddress(RpcProperties.PORT));
+            ChannelFuture future = bootstrap.bind(ConfigManager.localRpcServiceAddress());
             future.channel().closeFuture().sync();
         } catch (InterruptedException e) {
             log.error("occur exception when start server:", e);

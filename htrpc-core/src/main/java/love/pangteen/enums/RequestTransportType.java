@@ -10,7 +10,7 @@ import lombok.Getter;
  **/
 @Getter
 @AllArgsConstructor
-public enum RpcRequestTransportType {
+public enum RequestTransportType {
 
     SOCKET("socket"),
 

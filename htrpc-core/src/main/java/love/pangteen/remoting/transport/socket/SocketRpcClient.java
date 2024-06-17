@@ -1,11 +1,10 @@
 package love.pangteen.remoting.transport.socket;
 
-import love.pangteen.constant.RpcProperties;
+import love.pangteen.config.ConfigManager;
 import love.pangteen.exception.RpcException;
 import love.pangteen.provider.ServiceDiscovery;
 import love.pangteen.remoting.dto.RpcRequest;
 import love.pangteen.remoting.transport.RpcRequestTransport;
-import love.pangteen.utils.extension.ExtensionLoader;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -23,7 +22,7 @@ public class SocketRpcClient implements RpcRequestTransport {
     private final ServiceDiscovery serviceDiscovery;
 
     public SocketRpcClient() {
-        this(ExtensionLoader.getExtensionLoader(ServiceDiscovery.class).getExtension(RpcProperties.SERVICE_PROVIDER_TYPE.getName()));
+        this(ConfigManager.getServiceDiscovery());
     }
 
     public SocketRpcClient(ServiceDiscovery serviceDiscovery) {

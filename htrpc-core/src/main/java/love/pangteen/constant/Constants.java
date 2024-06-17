@@ -39,4 +39,9 @@ public interface Constants {
 
     Charset DEFAULT_CHARSET = StandardCharsets.UTF_8;
 
+    /**
+     * 配置文件地址
+     */
+    String CONFIG_PATH = "htrpc.properties";
+
 }

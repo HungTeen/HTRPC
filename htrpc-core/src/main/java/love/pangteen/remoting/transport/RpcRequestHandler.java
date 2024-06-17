@@ -1,11 +1,9 @@
 package love.pangteen.remoting.transport;
 
 import lombok.extern.slf4j.Slf4j;
-import love.pangteen.constant.RpcProperties;
-import love.pangteen.enums.ServiceProviderType;
+import love.pangteen.config.ConfigManager;
 import love.pangteen.provider.ServiceProvider;
 import love.pangteen.remoting.dto.RpcRequest;
-import love.pangteen.utils.extension.ExtensionLoader;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -21,7 +19,7 @@ public class RpcRequestHandler {
     private final ServiceProvider serviceProvider;
 
     public RpcRequestHandler() {
-        this.serviceProvider = ExtensionLoader.getExtensionLoader(ServiceProvider.class).getExtension(RpcProperties.SERVICE_PROVIDER_TYPE.getName());
+        this.serviceProvider = ConfigManager.getServiceProvider();
     }
 
     /**

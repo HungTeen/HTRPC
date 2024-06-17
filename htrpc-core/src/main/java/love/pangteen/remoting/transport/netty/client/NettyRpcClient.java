@@ -12,14 +12,12 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import love.pangteen.codec.RpcMessageDecoder;
 import love.pangteen.codec.RpcMessageEncoder;
+import love.pangteen.config.ConfigManager;
 import love.pangteen.constant.Constants;
-import love.pangteen.constant.RpcProperties;
-import love.pangteen.provider.ServiceDiscovery;
 import love.pangteen.remoting.dto.RpcMessage;
 import love.pangteen.remoting.dto.RpcRequest;
 import love.pangteen.remoting.dto.RpcResponse;
 import love.pangteen.remoting.transport.RpcRequestTransport;
-import love.pangteen.utils.extension.ExtensionLoader;
 
 import java.net.InetSocketAddress;
 import java.util.Map;
@@ -36,12 +34,10 @@ import java.util.concurrent.TimeUnit;
 public class NettyRpcClient implements RpcRequestTransport {
 
     private static final Map<String, CompletableFuture<RpcResponse<Object>>> REQUEST_MAP = new ConcurrentHashMap<>();
-    private final ServiceDiscovery serviceDiscovery;
     private final EventLoopGroup eventLoopGroup;
     private final Bootstrap bootstrap;
 
     public NettyRpcClient() {
-        this.serviceDiscovery = ExtensionLoader.getExtensionLoader(ServiceDiscovery.class).getExtension(RpcProperties.SERVICE_PROVIDER_TYPE.getName());
         this.eventLoopGroup = new NioEventLoopGroup();
         this.bootstrap = new Bootstrap();
         this.bootstrap.group(this.eventLoopGroup)
@@ -67,14 +63,14 @@ public class NettyRpcClient implements RpcRequestTransport {
     public Object sendRpcRequest(RpcRequest rpcRequest) {
         // build return value
         CompletableFuture<RpcResponse<Object>> resultFuture = new CompletableFuture<>();
-        InetSocketAddress address = this.serviceDiscovery.lookupService(rpcRequest.getRpcServiceName());
+        InetSocketAddress address = ConfigManager.getServiceDiscovery().lookupService(rpcRequest.getRpcServiceName());
         Channel channel = getChannel(address);
         if (channel.isActive()) {
             put(rpcRequest.getRequestId(), resultFuture);
             RpcMessage message = RpcMessage.builder()
                     .data(rpcRequest)
-                    .codec(RpcProperties.SERIALIZATION_TYPE.getCode())
-                    .compressType(RpcProperties.COMPRESS_TYPE.getCode())
+                    .codec(ConfigManager.getSerializationType().getCode())
+                    .compressType(ConfigManager.getCompressType().getCode())
                     .messageType(Constants.REQUEST_TYPE)
                     .build();
             ChannelFuture channelFuture = channel.writeAndFlush(message);

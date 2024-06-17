@@ -1,14 +1,13 @@
 package love.pangteen.remoting.transport.socket;
 
 import lombok.extern.slf4j.Slf4j;
-import love.pangteen.constant.RpcProperties;
+import love.pangteen.config.ConfigManager;
 import love.pangteen.provider.ServiceProvider;
 import love.pangteen.provider.local.LocalServiceProvider;
 import love.pangteen.utils.factory.SingletonFactory;
 import love.pangteen.utils.factory.ThreadPoolFactory;
 
 import java.io.IOException;
-import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -33,9 +32,9 @@ public class SocketRpcServer {
 
     public void start(){
         try (ServerSocket serverSocket = new ServerSocket()) {
-            String host = InetAddress.getLocalHost().getHostAddress();
-            serverSocket.bind(new InetSocketAddress(host, RpcProperties.PORT));
-            log.info("server started on port {}", RpcProperties.PORT);
+            InetSocketAddress address = ConfigManager.localRpcServiceAddress();
+            serverSocket.bind(address);
+            log.info("server started on port {}", address.getPort());
             Socket socket;
             while ((socket = serverSocket.accept()) != null) {
                 log.info("client connected [{}]", socket.getInetAddress());

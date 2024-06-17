@@ -3,12 +3,11 @@ package love.pangteen.spring;
 import lombok.extern.slf4j.Slf4j;
 import love.pangteen.annotations.HTRpcReference;
 import love.pangteen.annotations.HTRpcService;
+import love.pangteen.config.ConfigManager;
 import love.pangteen.config.RpcServiceConfig;
-import love.pangteen.constant.RpcProperties;
 import love.pangteen.provider.ServiceProvider;
 import love.pangteen.proxy.RpcClientProxy;
 import love.pangteen.remoting.transport.RpcRequestTransport;
-import love.pangteen.utils.extension.ExtensionLoader;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.stereotype.Component;
@@ -28,8 +27,8 @@ public class RpcBeanPostProcessor implements BeanPostProcessor {
     private final RpcRequestTransport requestTransport;
 
     public RpcBeanPostProcessor() {
-        this.serviceProvider = ExtensionLoader.getExtensionLoader(ServiceProvider.class).getExtension(RpcProperties.SERVICE_PROVIDER_TYPE.getName());
-        this.requestTransport = ExtensionLoader.getExtensionLoader(RpcRequestTransport.class).getExtension(RpcProperties.RPC_REQUEST_TRANSPORT_TYPE.getName());
+        this.serviceProvider = ConfigManager.getServiceProvider();
+        this.requestTransport = ConfigManager.getRpcRequestTransport();
     }
 
     @Override

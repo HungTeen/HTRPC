@@ -1,11 +1,9 @@
 package love.pangteen.provider.local;
 
-import love.pangteen.constant.RpcProperties;
+import love.pangteen.config.ConfigManager;
 import love.pangteen.provider.ServiceDiscovery;
 
-import java.net.InetAddress;
 import java.net.InetSocketAddress;
-import java.net.UnknownHostException;
 
 /**
  * @program: HTRPC
@@ -16,10 +14,6 @@ public class LocalServiceDiscovery implements ServiceDiscovery {
 
     @Override
     public InetSocketAddress lookupService(String rpcServiceName) {
-        try {
-            return new InetSocketAddress(InetAddress.getLocalHost().getHostAddress(), RpcProperties.PORT);
-        } catch (UnknownHostException e) {
-            throw new RuntimeException(e);
-        }
+        return ConfigManager.localRpcServiceAddress();
     }
 }

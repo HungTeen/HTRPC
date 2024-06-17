@@ -1,9 +1,10 @@
 package love.pangteen;
 
-import com.alibaba.spring.context.config.ConfigurationBeanBinder;
+import love.pangteen.config.HTRpcConfig;
 import love.pangteen.utils.PropertySourcesUtil;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.source.ConfigurationPropertySources;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,9 +28,15 @@ public class HTRpcAutoConfiguration {
         return propertyResolver.getProperty(Utils.BASE_PACKAGES_PROPERTY_NAME, Set.class, Collections.emptySet());
     }
 
+    /**
+     * 获取配置Bean。
+     *
+     * @return 配置对象
+     */
     @Bean
-    public ConfigurationBeanBinder htRpcConfigBinder() {
-        return new HTRpcConfigBeanBinder();
+    @ConfigurationProperties(prefix = "htrpc")
+    public HTRpcConfig getHTRpcConfig() {
+        return new HTRpcConfig();
     }
 
 //    /**

@@ -1,14 +1,12 @@
 package love.pangteen.provider.nacos;
 
 import lombok.extern.slf4j.Slf4j;
+import love.pangteen.config.ConfigManager;
 import love.pangteen.config.RpcServiceConfig;
-import love.pangteen.constant.RpcProperties;
 import love.pangteen.enums.RpcErrorMessage;
 import love.pangteen.exception.RpcException;
 import love.pangteen.provider.ServiceProvider;
 import love.pangteen.provider.ServiceRegistry;
-import love.pangteen.utils.Util;
-import love.pangteen.utils.extension.ExtensionLoader;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -26,7 +24,7 @@ public class NacosServiceProvider implements ServiceProvider {
 
     public NacosServiceProvider() {
         this.serviceMap = new ConcurrentHashMap<>();
-        this.serviceRegistry = ExtensionLoader.getExtensionLoader(ServiceRegistry.class).getExtension(RpcProperties.SERVICE_PROVIDER_TYPE.getName());
+        this.serviceRegistry = ConfigManager.getServiceRegistry();
     }
 
     @Override
@@ -40,7 +38,7 @@ public class NacosServiceProvider implements ServiceProvider {
     @Override
     public void publishService(RpcServiceConfig rpcServiceConfig) {
         serviceMap.put(rpcServiceConfig.getRpcServiceName(), rpcServiceConfig.getService());
-        serviceRegistry.registerService(rpcServiceConfig.getRpcServiceName(), Util.localAddress(RpcProperties.PORT));
+        serviceRegistry.registerService(rpcServiceConfig.getRpcServiceName(), ConfigManager.localRpcServiceAddress());
         log.info("Service: [{}] is published with interfaces [{}]", rpcServiceConfig.getRpcServiceName(), rpcServiceConfig.getService().getClass().getInterfaces());
     }
 
