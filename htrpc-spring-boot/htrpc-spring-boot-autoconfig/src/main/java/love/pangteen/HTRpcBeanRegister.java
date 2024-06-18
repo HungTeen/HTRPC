@@ -1,5 +1,6 @@
 package love.pangteen;
 
+import lombok.extern.slf4j.Slf4j;
 import love.pangteen.config.HTRpcConfig;
 import love.pangteen.utils.PropertySourcesUtil;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -9,7 +10,12 @@ import org.springframework.core.env.*;
 
 import java.util.Map;
 
+@Slf4j
 public class HTRpcBeanRegister {
+
+    static {
+        log.info("HTRpcBeanRegister is initialized !");
+    }
 
 //    /**
 //     * The bean is used to scan the packages of HTRPC Service classes

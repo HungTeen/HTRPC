@@ -65,7 +65,6 @@ public class NettyRpcServer {
             log.info("shutdown bossGroup and workerGroup");
             bossGroup.shutdownGracefully();
             workerGroup.shutdownGracefully();
-
         }
     }
 

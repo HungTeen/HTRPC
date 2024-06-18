@@ -5,9 +5,7 @@ import love.pangteen.annotations.HTRpcReference;
 import love.pangteen.annotations.HTRpcService;
 import love.pangteen.config.ConfigManager;
 import love.pangteen.config.RpcServiceConfig;
-import love.pangteen.provider.ServiceProvider;
 import love.pangteen.proxy.RpcClientProxy;
-import love.pangteen.remoting.transport.RpcRequestTransport;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.stereotype.Component;
@@ -23,19 +21,11 @@ import java.lang.reflect.Field;
 @Component
 public class RpcBeanPostProcessor implements BeanPostProcessor {
 
-    private final ServiceProvider serviceProvider;
-    private final RpcRequestTransport requestTransport;
-
-    public RpcBeanPostProcessor() {
-        this.serviceProvider = ConfigManager.getServiceProvider();
-        this.requestTransport = ConfigManager.getRpcRequestTransport();
-    }
-
     @Override
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
         // 是否有@HTRpcService注解。
         if(bean.getClass().isAnnotationPresent(HTRpcService.class)){
-            log.info("[{}] is annotated with  [{}]", bean.getClass().getName(), HTRpcService.class.getCanonicalName());
+            log.info("Find HTRPC service [{}]", bean.getClass().getName());
 
             // 获取注解信息。
             HTRpcService service = bean.getClass().getAnnotation(HTRpcService.class);
@@ -46,7 +36,7 @@ public class RpcBeanPostProcessor implements BeanPostProcessor {
                     .build();
 
             // 发布服务信息。
-            serviceProvider.publishService(rpcServiceConfig);
+            ConfigManager.getServiceProvider().publishService(rpcServiceConfig);
         }
         return bean;
     }
@@ -57,6 +47,8 @@ public class RpcBeanPostProcessor implements BeanPostProcessor {
         // 检查类的字段是否有@HTRpcReference注解。
         for (Field field : targetClass.getDeclaredFields()) {
             if (field.isAnnotationPresent(HTRpcReference.class)) {
+                log.info("Find HTRPC reference [{}] is in [{}]", field.getName(), targetClass.getCanonicalName());
+
                 // 获取注解信息。
                 HTRpcReference reference = field.getAnnotation(HTRpcReference.class);
                 RpcServiceConfig rpcServiceConfig = RpcServiceConfig.builder()
@@ -65,7 +57,7 @@ public class RpcBeanPostProcessor implements BeanPostProcessor {
                         .build();
 
                 // 代理字段。
-                RpcClientProxy rpcClientProxy = new RpcClientProxy(requestTransport, rpcServiceConfig);
+                RpcClientProxy rpcClientProxy = new RpcClientProxy(ConfigManager.getRpcRequestTransport(), rpcServiceConfig);
                 Object proxy = rpcClientProxy.getProxy(field.getType());
                 field.setAccessible(true);
                 try {
@@ -77,4 +69,5 @@ public class RpcBeanPostProcessor implements BeanPostProcessor {
         }
         return bean;
     }
+
 }

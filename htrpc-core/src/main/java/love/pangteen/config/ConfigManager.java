@@ -94,5 +94,4 @@ public class ConfigManager {
         return Util.getServiceRegistry(getServiceProviderType());
     }
 
-
 }
