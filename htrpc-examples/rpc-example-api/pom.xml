@@ -9,25 +9,12 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>htrpc-spring-boot-example</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>htrpc-spring-boot-server</module>
-        <module>htrpc-spring-boot-client</module>
-    </modules>
+    <artifactId>rpc-example-api</artifactId>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-
-    <dependencies>
-        <dependency>
-            <groupId>love.pangteen</groupId>
-            <artifactId>rpc-example-api</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-    </dependencies>
 
 </project>

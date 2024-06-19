@@ -5,16 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>love.pangteen</groupId>
-        <artifactId>htrpc-examples</artifactId>
+        <artifactId>feign-spring-boot-example</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>htrpc-native-example</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>htrpc-native-server</module>
-        <module>htrpc-native-client</module>
-    </modules>
+    <artifactId>feign-test-server</artifactId>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
@@ -25,12 +20,23 @@
     <dependencies>
         <dependency>
             <groupId>love.pangteen</groupId>
-            <artifactId>rpc-example-api</artifactId>
+            <artifactId>feign-example-api</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <!--SpringBoot Web-->
         <dependency>
-            <groupId>love.pangteen</groupId>
-            <artifactId>htrpc-core</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <!-- 引入 Spring Cloud Alibaba Nacos Discovery 相关依赖，将 Nacos 作为注册中心，并实现对其的自动配置 -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+        </dependency>
+        <!--负载均衡器-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-loadbalancer</artifactId>
         </dependency>
     </dependencies>
 

@@ -9,11 +9,11 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>htrpc-spring-boot-example</artifactId>
+    <artifactId>dubbo-spring-boot-example</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>htrpc-spring-boot-server</module>
-        <module>htrpc-spring-boot-client</module>
+        <module>dubbo-spring-boot-client</module>
+        <module>dubbo-spring-boot-server</module>
     </modules>
 
     <properties>
@@ -23,6 +23,26 @@
     </properties>
 
     <dependencies>
+        <!--SpringBoot Web-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <!--dubbo-spring-boot依赖-->
+        <dependency>
+            <groupId>org.apache.dubbo</groupId>
+            <artifactId>dubbo-spring-boot-starter</artifactId>
+        </dependency>
+        <!--dubbo-->
+        <dependency>
+            <groupId>org.apache.dubbo</groupId>
+            <artifactId>dubbo</artifactId>
+        </dependency>
+        <!--dubbo 整合 nacos-->
+        <dependency>
+            <groupId>org.apache.dubbo</groupId>
+            <artifactId>dubbo-registry-nacos</artifactId>
+        </dependency>
         <dependency>
             <groupId>love.pangteen</groupId>
             <artifactId>rpc-example-api</artifactId>

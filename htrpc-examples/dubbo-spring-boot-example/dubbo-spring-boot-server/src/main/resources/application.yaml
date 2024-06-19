@@ -1,0 +1,18 @@
+server:
+  port: 8080
+logging:
+  level:
+    root: error
+dubbo:
+  application:
+    name: dubbo-provider
+    auto-trust-serialize-class: true
+  protocol:
+    name: dubbo
+    port: -1
+  registry:
+    address: nacos://localhost:8848
+  consumer:
+    check: false
+  metadata-report:
+    retry-times: 3

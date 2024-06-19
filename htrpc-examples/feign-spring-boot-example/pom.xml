@@ -9,11 +9,12 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>htrpc-spring-boot-example</artifactId>
+    <artifactId>feign-spring-boot-example</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>htrpc-spring-boot-server</module>
-        <module>htrpc-spring-boot-client</module>
+        <module>feign-example-api</module>
+        <module>feign-test-client</module>
+        <module>feign-test-server</module>
     </modules>
 
     <properties>
@@ -24,9 +25,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>love.pangteen</groupId>
-            <artifactId>rpc-example-api</artifactId>
-            <version>${project.version}</version>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
     </dependencies>
 

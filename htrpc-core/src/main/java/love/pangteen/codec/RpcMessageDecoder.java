@@ -107,6 +107,7 @@ public class RpcMessageDecoder extends LengthFieldBasedFrameDecoder {
                         rpcMessage.setData(data);
                     }
                 }
+                frame.release(); // 释放引用，防止内存泄漏。
                 return rpcMessage;
             }
         }
