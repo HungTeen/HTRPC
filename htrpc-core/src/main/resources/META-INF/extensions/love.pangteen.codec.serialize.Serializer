@@ -1,1 +1,2 @@
 kryo=love.pangteen.codec.serialize.kryo.KryoSerializer
+protobuf=love.pangteen.codec.serialize.protobuf.ProtobufSerializer

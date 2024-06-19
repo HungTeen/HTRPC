@@ -8,4 +8,7 @@ htrpc:
   service-provider-type: nacos
 logging:
   level:
-    root: warn
+    root: error
+spring:
+  profiles:
+    active: kryo

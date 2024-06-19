@@ -2,7 +2,7 @@ package love.pangteen.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import love.pangteen.Activity;
-import love.pangteen.WorkService;
+import love.pangteen.service.WorkService;
 import love.pangteen.annotations.HTRpcService;
 
 /**

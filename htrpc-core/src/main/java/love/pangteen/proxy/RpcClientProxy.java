@@ -2,6 +2,7 @@ package love.pangteen.proxy;
 
 import cn.hutool.core.lang.UUID;
 import lombok.extern.slf4j.Slf4j;
+import love.pangteen.config.ConfigManager;
 import love.pangteen.config.RpcServiceConfig;
 import love.pangteen.enums.RpcErrorMessage;
 import love.pangteen.enums.RpcResult;
@@ -27,15 +28,14 @@ public class RpcClientProxy implements InvocationHandler {
 
     private static final String INTERFACE_NAME = "interfaceName";
 
-    private final RpcRequestTransport transport;
+    private volatile RpcRequestTransport transport;
     private final RpcServiceConfig serviceConfig;
 
-    public RpcClientProxy(RpcRequestTransport transport) {
-        this(transport, new RpcServiceConfig());
+    public RpcClientProxy() {
+        this(new RpcServiceConfig());
     }
 
-    public RpcClientProxy(RpcRequestTransport transport, RpcServiceConfig serviceConfig) {
-        this.transport = transport;
+    public RpcClientProxy(RpcServiceConfig serviceConfig) {
         this.serviceConfig = serviceConfig;
     }
 
@@ -52,11 +52,15 @@ public class RpcClientProxy implements InvocationHandler {
                 .group(serviceConfig.getGroup())
                 .build();
         RpcResponse<Object> response = null;
-        if (transport instanceof SocketRpcClient socketRpcClient) {
-            response = (RpcResponse<Object>) socketRpcClient.sendRpcRequest(request);
-        } else if(transport instanceof NettyRpcClient nettyRpcClient){
-            CompletableFuture<RpcResponse<Object>> completableFuture = (CompletableFuture<RpcResponse<Object>>) nettyRpcClient.sendRpcRequest(request);
-            response = completableFuture.get();
+        switch (getTransport()){
+            case SocketRpcClient socketRpcClient -> {
+                response = (RpcResponse<Object>) socketRpcClient.sendRpcRequest(request);
+            }
+            case NettyRpcClient nettyRpcClient -> {
+                CompletableFuture<RpcResponse<Object>> completableFuture = (CompletableFuture<RpcResponse<Object>>) nettyRpcClient.sendRpcRequest(request);
+                response = completableFuture.get();
+            }
+            default -> throw new IllegalStateException("Unexpected value: " + getTransport());
         }
         check(request, response);
         return response.getData();
@@ -81,6 +85,17 @@ public class RpcClientProxy implements InvocationHandler {
         if (rpcResponse.getCode() == null || !rpcResponse.getCode().equals(RpcResult.SUCCESS.getCode())) {
             throw new RpcException(RpcErrorMessage.SERVICE_INVOCATION_FAILURE, INTERFACE_NAME + ":" + rpcRequest.getInterfaceName());
         }
+    }
+
+    private RpcRequestTransport getTransport(){
+        if(transport == null){
+            synchronized (RpcClientProxy.class){
+                if(transport == null){
+                    transport = ConfigManager.getRpcRequestTransport();
+                }
+            }
+        }
+        return transport;
     }
 
 }

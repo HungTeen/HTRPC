@@ -2,9 +2,6 @@ package love.pangteen.remoting.transport.socket;
 
 import lombok.extern.slf4j.Slf4j;
 import love.pangteen.config.ConfigManager;
-import love.pangteen.provider.ServiceProvider;
-import love.pangteen.provider.local.LocalServiceProvider;
-import love.pangteen.utils.factory.SingletonFactory;
 import love.pangteen.utils.factory.ThreadPoolFactory;
 
 import java.io.IOException;
@@ -22,12 +19,9 @@ import java.util.concurrent.ExecutorService;
 public class SocketRpcServer {
 
     private final ExecutorService threadPool;
-    private final ServiceProvider serviceProvider;
-
 
     public SocketRpcServer() {
         this.threadPool = ThreadPoolFactory.createCustomThreadPoolIfAbsent("socket-server-rpc-pool");
-        this.serviceProvider = SingletonFactory.getInstance(LocalServiceProvider.class);
     }
 
     public void start(){

@@ -4,8 +4,11 @@ htrpc:
   registry-center-address: localhost
   registry-center-port: 8848
   registry-center-namespace: public
-  service-port: 9999
+  service-port: 7777
   service-provider-type: nacos
 logging:
   level:
-    root: warn
+    root: error
+spring:
+  profiles:
+    active: kryo

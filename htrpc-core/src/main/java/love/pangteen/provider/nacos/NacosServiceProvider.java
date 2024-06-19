@@ -6,7 +6,6 @@ import love.pangteen.config.RpcServiceConfig;
 import love.pangteen.enums.RpcErrorMessage;
 import love.pangteen.exception.RpcException;
 import love.pangteen.provider.ServiceProvider;
-import love.pangteen.provider.ServiceRegistry;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -20,11 +19,9 @@ import java.util.concurrent.ConcurrentHashMap;
 public class NacosServiceProvider implements ServiceProvider {
 
     private final Map<String, Object> serviceMap;
-    private final ServiceRegistry serviceRegistry;
 
     public NacosServiceProvider() {
         this.serviceMap = new ConcurrentHashMap<>();
-        this.serviceRegistry = ConfigManager.getServiceRegistry();
     }
 
     @Override
@@ -38,7 +35,7 @@ public class NacosServiceProvider implements ServiceProvider {
     @Override
     public void publishService(RpcServiceConfig rpcServiceConfig) {
         serviceMap.put(rpcServiceConfig.getRpcServiceName(), rpcServiceConfig.getService());
-        serviceRegistry.registerService(rpcServiceConfig.getRpcServiceName(), ConfigManager.localRpcServiceAddress());
+        ConfigManager.getServiceRegistry().registerService(rpcServiceConfig.getRpcServiceName(), ConfigManager.localRpcServiceAddress());
         log.info("Service: [{}] is published with interfaces [{}]", rpcServiceConfig.getRpcServiceName(), rpcServiceConfig.getService().getClass().getInterfaces());
     }
 

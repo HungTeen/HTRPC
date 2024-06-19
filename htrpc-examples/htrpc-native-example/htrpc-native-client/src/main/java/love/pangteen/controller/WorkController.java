@@ -1,6 +1,6 @@
 package love.pangteen.controller;
 
-import love.pangteen.WorkService;
+import love.pangteen.service.WorkService;
 import love.pangteen.annotations.HTRpcReference;
 import org.springframework.stereotype.Component;
 

@@ -13,7 +13,7 @@ import lombok.Getter;
 public enum SerializationType {
 
     KRYO((byte) 0x01, "kryo"),
-    PROTOSTUFF((byte) 0x02, "protostuff"),
+    PROTOBUF((byte) 0x02, "protobuf"),
     HESSIAN((byte) 0x03, "hessian"),
 
     ;

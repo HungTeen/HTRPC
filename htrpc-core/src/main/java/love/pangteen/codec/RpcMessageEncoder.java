@@ -6,7 +6,6 @@ import io.netty.handler.codec.MessageToByteEncoder;
 import lombok.extern.slf4j.Slf4j;
 import love.pangteen.codec.compress.Compress;
 import love.pangteen.codec.serialize.Serializer;
-import love.pangteen.config.ConfigManager;
 import love.pangteen.constant.Constants;
 import love.pangteen.enums.CompressType;
 import love.pangteen.enums.SerializationType;
@@ -53,7 +52,7 @@ public class RpcMessageEncoder extends MessageToByteEncoder<RpcMessage> {
             out.writerIndex(out.writerIndex() + Constants.LENGTH_LENGTH);
             out.writeByte(msg.getMessageType());
             out.writeByte(msg.getCodec());
-            out.writeByte(ConfigManager.getCompressType().getCode());
+            out.writeByte(msg.getCompressType());
             out.writeInt(ATOMIC_INTEGER.getAndIncrement());
             byte[] bodyBytes = null;
             int fullLength = Constants.HEAD_LENGTH;

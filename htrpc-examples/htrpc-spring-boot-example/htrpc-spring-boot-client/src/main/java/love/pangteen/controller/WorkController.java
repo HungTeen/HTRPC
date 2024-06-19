@@ -1,7 +1,7 @@
 package love.pangteen.controller;
 
 import love.pangteen.Result;
-import love.pangteen.WorkService;
+import love.pangteen.service.WorkService;
 import love.pangteen.annotations.HTRpcReference;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

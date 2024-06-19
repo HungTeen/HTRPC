@@ -57,7 +57,7 @@ public class RpcBeanPostProcessor implements BeanPostProcessor {
                         .build();
 
                 // 代理字段。
-                RpcClientProxy rpcClientProxy = new RpcClientProxy(ConfigManager.getRpcRequestTransport(), rpcServiceConfig);
+                RpcClientProxy rpcClientProxy = new RpcClientProxy(rpcServiceConfig);
                 Object proxy = rpcClientProxy.getProxy(field.getType());
                 field.setAccessible(true);
                 try {

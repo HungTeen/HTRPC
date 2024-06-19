@@ -1,7 +1,11 @@
 package love.pangteen;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
 
 /**
  * @program: HTRPC
@@ -9,14 +13,16 @@ import lombok.Data;
  * @create: 2024/6/18 11:05
  **/
 @Data
+@Builder
+@NoArgsConstructor
 @AllArgsConstructor
-public class Result {
+public class Result implements Serializable {
 
-    private final int code;
+    private int code;
 
-    private final String message;
+    private String message;
 
-    private final Object data;
+    private Object data;
 
     public static Result success() {
         return success(null);
