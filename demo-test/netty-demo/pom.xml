@@ -5,18 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>love.pangteen</groupId>
-        <artifactId>HTRPC</artifactId>
+        <artifactId>demo-test</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>demo-test</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>netty-demo</module>
-        <module>proxy-demo</module>
-        <module>socket-demo</module>
-        <module>netty-example</module>
-    </modules>
+    <artifactId>netty-demo</artifactId>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
@@ -26,8 +19,12 @@
 
     <dependencies>
         <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-all</artifactId>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-all</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.esotericsoftware</groupId>
+            <artifactId>kryo</artifactId>
         </dependency>
     </dependencies>
 
