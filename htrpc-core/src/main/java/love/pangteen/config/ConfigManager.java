@@ -13,6 +13,7 @@ import love.pangteen.remoting.transport.RpcRequestTransport;
 import love.pangteen.utils.Util;
 
 import java.net.InetSocketAddress;
+import java.util.Optional;
 
 /**
  * @program: HTRPC
@@ -46,6 +47,14 @@ public class ConfigManager {
 
     public static String getRegistryAddressWithPort() {
         return getConfig().getRegistryCenterAddress() + ":" + getConfig().getRegistryCenterPort();
+    }
+
+    public static Optional<String> getRegistryCenterUsername() {
+        return Optional.ofNullable(getConfig().getRegistryCenterUsername());
+    }
+
+    public static Optional<String> getRegistryCenterPassword() {
+        return Optional.ofNullable(getConfig().getRegistryCenterPassword());
     }
 
     /* RPC Config */

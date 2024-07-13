@@ -15,15 +15,36 @@ import java.util.Properties;
  **/
 public class NacosManager {
 
-    public static NamingService getNamingService(){
+    private static volatile NamingService namingService;
+
+    public static NamingService getNamingService() {
+        if (namingService == null) {
+            synchronized (NacosManager.class) {
+                if (namingService == null) {
+                    namingService = createNamingService();
+                }
+            }
+        }
+        return namingService;
+    }
+
+    private static NamingService createNamingService(){
         NamingService naming = null;
         try {
             Properties properties = new Properties();
             // 多个地址使用逗号隔开
             properties.setProperty(PropertyKeyConst.SERVER_ADDR, ConfigManager.getRegistryAddressWithPort());
             properties.setProperty(PropertyKeyConst.NAMESPACE, ConfigManager.getConfig().getRegistryCenterNamespace());
-//            properties.put(PropertyKeyConst.USERNAME, "nacos");
-//            properties.put(PropertyKeyConst.PASSWORD, "nacos");
+            ConfigManager.getRegistryCenterUsername().ifPresent(username -> {
+                if(!username.isEmpty()) {
+                    properties.setProperty(PropertyKeyConst.USERNAME, username);
+                }
+            });
+            ConfigManager.getRegistryCenterPassword().ifPresent(password -> {
+                if(!password.isEmpty()) {
+                    properties.setProperty(PropertyKeyConst.PASSWORD, password);
+                }
+            });
             naming = NamingFactory.createNamingService(properties);
         } catch (NacosException e) {
             throw new RuntimeException(e);

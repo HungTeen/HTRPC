@@ -4,6 +4,8 @@ import love.pangteen.Activity;
 import love.pangteen.Result;
 import love.pangteen.annotations.HTRpcReference;
 import love.pangteen.service.RpcTestService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +22,7 @@ import java.util.Random;
 @RequestMapping("/test")
 public class TestController {
 
+    private static final Logger log = LoggerFactory.getLogger(TestController.class);
     @HTRpcReference
     private RpcTestService rpcTestService;
 

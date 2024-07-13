@@ -11,7 +11,7 @@ dubbo:
     name: dubbo
     port: -1
   registry:
-    address: nacos://localhost:8848
+    address: nacos://localhost:8848?username=nacos&password=nacos
   consumer:
     check: false
   metadata-report:
