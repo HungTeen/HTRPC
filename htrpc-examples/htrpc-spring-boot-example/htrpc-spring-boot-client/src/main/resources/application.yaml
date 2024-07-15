@@ -8,10 +8,10 @@ htrpc:
   registry-center-namespace: public
   service-port: 7777
   service-provider-type: nacos
-  request-transport-type: socket
+  request-transport-type: netty
 logging:
   level:
-    root: info
+    root: error
 spring:
   profiles:
     active: kryo
