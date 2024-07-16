@@ -25,4 +25,16 @@ public class WorkController {
         return Result.success();
     }
 
+    @PostMapping("/touchFish")
+    public Result touchFish(){
+        workService.touchFish(null, 666);
+        return Result.success();
+    }
+
+    @PostMapping("/canRelax")
+    public Result canRelax() {
+        workService.canRelax(100);
+        return Result.success();
+    }
+
 }

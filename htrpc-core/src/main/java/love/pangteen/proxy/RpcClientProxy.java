@@ -17,6 +17,7 @@ import love.pangteen.utils.factory.ProxyFactory;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @program: HTRPC
@@ -42,27 +43,47 @@ public class RpcClientProxy implements InvocationHandler {
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         log.info("invoke method: [{}]", method.getName());
-        RpcRequest request = RpcRequest.builder()
-                .requestId(UUID.randomUUID().toString())
-                .interfaceName(method.getDeclaringClass().getName())
-                .methodName(method.getName())
-                .parameters(args)
-                .paramTypes(method.getParameterTypes())
-                .version(serviceConfig.getVersion())
-                .group(serviceConfig.getGroup())
-                .build();
+        boolean invokeSuccess = false;
         RpcResponse<Object> response = null;
-        switch (getTransport()){
-            case SocketRpcClient socketRpcClient -> {
-                response = (RpcResponse<Object>) socketRpcClient.sendRpcRequest(request);
+        for(int i = 0; i < ConfigManager.getRetries(); ++ i){
+            boolean trySuccess = true;
+            RpcRequest request = RpcRequest.builder()
+                    .requestId(UUID.randomUUID().toString())
+                    .interfaceName(method.getDeclaringClass().getName())
+                    .methodName(method.getName())
+                    .parameters(args)
+                    .paramTypes(method.getParameterTypes())
+                    .version(serviceConfig.getVersion())
+                    .group(serviceConfig.getGroup())
+                    .build();
+            try {
+                switch (getTransport()){
+                    case SocketRpcClient socketRpcClient -> {
+                        response = (RpcResponse<Object>) socketRpcClient.sendRpcRequest(request);
+                    }
+                    case NettyRpcClient nettyRpcClient -> {
+                        CompletableFuture<RpcResponse<Object>> completableFuture = (CompletableFuture<RpcResponse<Object>>) nettyRpcClient.sendRpcRequest(request);
+                        response = completableFuture.get(ConfigManager.getTimeout(), TimeUnit.MILLISECONDS);
+                    }
+                    default -> throw new IllegalStateException("Unexpected value: " + getTransport());
+                }
+                check(request, response);
+            } catch (Exception e){
+                log.warn(e.getMessage());
+                trySuccess = false;
             }
-            case NettyRpcClient nettyRpcClient -> {
-                CompletableFuture<RpcResponse<Object>> completableFuture = (CompletableFuture<RpcResponse<Object>>) nettyRpcClient.sendRpcRequest(request);
-                response = completableFuture.get();
+            if(trySuccess){
+                invokeSuccess = true;
+                break;
+            } else {
+                log.info("the {} try failed for {}", i + 1, method.getName());
             }
-            default -> throw new IllegalStateException("Unexpected value: " + getTransport());
         }
-        check(request, response);
+        if(response == null || ! invokeSuccess){
+            log.error("invoke remote method {} failed finally !", method.getName());
+            throw new RpcException(RpcErrorMessage.RETRY_FAILED_FINALLY);
+        }
+
         return response.getData();
     }
 

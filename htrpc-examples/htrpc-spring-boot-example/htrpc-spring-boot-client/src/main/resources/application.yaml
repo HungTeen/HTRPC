@@ -9,9 +9,10 @@ htrpc:
   service-port: 7777
   service-provider-type: nacos
   request-transport-type: netty
+  retries: 3
 logging:
   level:
-    root: error
+    root: info
 spring:
   profiles:
     active: kryo

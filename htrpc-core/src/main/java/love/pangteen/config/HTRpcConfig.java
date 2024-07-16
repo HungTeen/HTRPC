@@ -55,4 +55,8 @@ public class HTRpcConfig {
 
     private ServiceProviderType serviceProviderType;
 
+    private Integer retries = 3;
+
+    private Long timeout = 1000L;
+
 }

@@ -26,6 +26,11 @@ public class HardWorkService implements WorkService {
     @Override
     public void touchFish(Activity activity, int time) {
         log.info("I am touching fish for {} hours", time);
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -37,7 +42,7 @@ public class HardWorkService implements WorkService {
     @Override
     public boolean canRelax(int time) {
         log.info("You must hard work without relax !");
-        return false;
+        throw new RuntimeException("You are not allowed to relax !");
     }
 
 }

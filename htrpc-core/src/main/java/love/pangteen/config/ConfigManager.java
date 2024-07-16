@@ -103,4 +103,11 @@ public class ConfigManager {
         return Util.getServiceRegistry(getServiceProviderType());
     }
 
+    public static int getRetries(){
+        return getConfig().getRetries();
+    }
+
+    public static long getTimeout(){
+        return getConfig().getTimeout();
+    }
 }

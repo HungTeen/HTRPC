@@ -11,7 +11,7 @@ htrpc:
   request-transport-type: netty
 logging:
   level:
-    root: error
+    root: info
 spring:
   profiles:
     active: kryo
