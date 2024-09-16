@@ -22,4 +22,9 @@ public @interface HTRpcReference {
      * Service group, default value is empty string
      */
     String group() default "";
+
+    /**
+     * Direct connect to target url.
+     */
+    String url() default "";
 }

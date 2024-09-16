@@ -27,6 +27,11 @@ public class RpcServiceConfig {
     private String group = "";
 
     /**
+     * Direct connect.
+     */
+    private String url = "";
+
+    /**
      * target service
      */
     private Object service;

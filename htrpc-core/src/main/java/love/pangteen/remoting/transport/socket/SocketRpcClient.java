@@ -22,20 +22,9 @@ import java.net.Socket;
 @Slf4j
 public class SocketRpcClient implements RpcRequestTransport {
 
-    private final ServiceDiscovery serviceDiscovery;
-
-    public SocketRpcClient() {
-        this(ConfigManager.getServiceDiscovery());
-    }
-
-    public SocketRpcClient(ServiceDiscovery serviceDiscovery) {
-        this.serviceDiscovery = serviceDiscovery;
-    }
-
     @Override
-    public Object sendRpcRequest(RpcRequest rpcRequest) {
+    public Object sendRpcRequest(RpcRequest rpcRequest, InetSocketAddress serviceAddress) {
         TimeAnalyzer analyzer = new TimeAnalyzer();
-        InetSocketAddress serviceAddress = serviceDiscovery.lookupService(rpcRequest.getRpcServiceName());
 
         log.info("lookup service server cost time: [{}]", analyzer.query());
 

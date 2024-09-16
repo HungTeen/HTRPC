@@ -1,12 +1,15 @@
 package love.pangteen.proxy;
 
 import cn.hutool.core.lang.UUID;
+import cn.hutool.core.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;
 import love.pangteen.config.ConfigManager;
 import love.pangteen.config.RpcServiceConfig;
+import love.pangteen.constant.Constants;
 import love.pangteen.enums.RpcErrorMessage;
 import love.pangteen.enums.RpcResult;
 import love.pangteen.exception.RpcException;
+import love.pangteen.provider.ServiceDiscovery;
 import love.pangteen.remoting.dto.RpcRequest;
 import love.pangteen.remoting.dto.RpcResponse;
 import love.pangteen.remoting.transport.RpcRequestTransport;
@@ -16,6 +19,7 @@ import love.pangteen.utils.factory.ProxyFactory;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.net.InetSocketAddress;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
@@ -30,6 +34,7 @@ public class RpcClientProxy implements InvocationHandler {
     private static final String INTERFACE_NAME = "interfaceName";
 
     private volatile RpcRequestTransport transport;
+
     private final RpcServiceConfig serviceConfig;
 
     public RpcClientProxy() {
@@ -57,16 +62,19 @@ public class RpcClientProxy implements InvocationHandler {
                     .group(serviceConfig.getGroup())
                     .build();
             try {
+                InetSocketAddress serviceAddress = findTargetAddress(request);
+
                 switch (getTransport()){
                     case SocketRpcClient socketRpcClient -> {
-                        response = (RpcResponse<Object>) socketRpcClient.sendRpcRequest(request);
+                        response = (RpcResponse<Object>) socketRpcClient.sendRpcRequest(request, serviceAddress);
                     }
                     case NettyRpcClient nettyRpcClient -> {
-                        CompletableFuture<RpcResponse<Object>> completableFuture = (CompletableFuture<RpcResponse<Object>>) nettyRpcClient.sendRpcRequest(request);
+                        CompletableFuture<RpcResponse<Object>> completableFuture = (CompletableFuture<RpcResponse<Object>>) nettyRpcClient.sendRpcRequest(request, serviceAddress);
                         response = completableFuture.get(ConfigManager.getTimeout(), TimeUnit.MILLISECONDS);
                     }
                     default -> throw new IllegalStateException("Unexpected value: " + getTransport());
                 }
+
                 check(request, response);
             } catch (Exception e){
                 log.warn(e.getMessage());
@@ -87,8 +95,25 @@ public class RpcClientProxy implements InvocationHandler {
         return response.getData();
     }
 
+    private InetSocketAddress findTargetAddress(RpcRequest request){
+        if(serviceConfig.getUrl().isEmpty()){
+            return ConfigManager.getServiceDiscovery().lookupService(request.getRpcServiceName());
+        }
+        return getAddress(serviceConfig.getUrl());
+    }
+
     public <T> T getProxy(Class<T> clazz) {
         return ProxyFactory.getProxy(clazz, this);
+    }
+
+    private static InetSocketAddress getAddress(String url){
+        if(url.startsWith(Constants.DIRECT_URL_PREFIX)){
+            String left = url.substring(Constants.DIRECT_URL_PREFIX.length());
+            String[] split = left.split("/");
+            String[] add = split[0].split(":");
+            return new InetSocketAddress(add[0], Integer.parseInt(add[1]));
+        }
+        return null;
     }
 
     private static void check(RpcRequest rpcRequest, RpcResponse<Object> rpcResponse) {

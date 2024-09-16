@@ -54,6 +54,7 @@ public class RpcBeanPostProcessor implements BeanPostProcessor {
                 RpcServiceConfig rpcServiceConfig = RpcServiceConfig.builder()
                         .group(reference.group())
                         .version(reference.version())
+                        .url(reference.url())
                         .build();
 
                 // 代理字段。

@@ -2,10 +2,7 @@ package love.pangteen.config;
 
 import love.pangteen.codec.compress.Compress;
 import love.pangteen.codec.serialize.Serializer;
-import love.pangteen.enums.CompressType;
-import love.pangteen.enums.RequestTransportType;
-import love.pangteen.enums.SerializationType;
-import love.pangteen.enums.ServiceProviderType;
+import love.pangteen.enums.*;
 import love.pangteen.provider.ServiceDiscovery;
 import love.pangteen.provider.ServiceProvider;
 import love.pangteen.provider.ServiceRegistry;
@@ -55,6 +52,10 @@ public class ConfigManager {
 
     public static Optional<String> getRegistryCenterPassword() {
         return Optional.ofNullable(getConfig().getRegistryCenterPassword());
+    }
+
+    public static LoadBalanceType getLoadBalanceType() {
+        return getConfig().getLoadBalanceType();
     }
 
     /* RPC Config */

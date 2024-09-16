@@ -60,10 +60,9 @@ public class NettyRpcClient implements RpcRequestTransport {
     }
 
     @Override
-    public Object sendRpcRequest(RpcRequest rpcRequest) {
+    public Object sendRpcRequest(RpcRequest rpcRequest, InetSocketAddress address) {
         // build return value
         CompletableFuture<RpcResponse<Object>> resultFuture = new CompletableFuture<>();
-        InetSocketAddress address = ConfigManager.getServiceDiscovery().lookupService(rpcRequest.getRpcServiceName());
         Channel channel = getChannel(address);
         if (channel.isActive()) {
             put(rpcRequest.getRequestId(), resultFuture);

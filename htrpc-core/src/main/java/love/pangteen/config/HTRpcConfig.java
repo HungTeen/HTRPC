@@ -2,10 +2,7 @@ package love.pangteen.config;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import love.pangteen.enums.CompressType;
-import love.pangteen.enums.RequestTransportType;
-import love.pangteen.enums.SerializationType;
-import love.pangteen.enums.ServiceProviderType;
+import love.pangteen.enums.*;
 
 /**
  * @program: HTRPC
@@ -42,6 +39,11 @@ public class HTRpcConfig {
      * Namespace for register center
      */
     private String registryCenterNamespace;
+
+    /**
+     * load balance strategy
+     */
+    private LoadBalanceType loadBalanceType = LoadBalanceType.DEFAULT;
 
     /* RPC Config */
 

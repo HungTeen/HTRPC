@@ -4,6 +4,7 @@ import love.pangteen.provider.local.LocalServiceDiscovery;
 import love.pangteen.remoting.dto.RpcRequest;
 import love.pangteen.remoting.transport.socket.SocketRpcClient;
 import love.pangteen.remoting.transport.socket.SocketRpcServer;
+import love.pangteen.utils.Util;
 import love.pangteen.utils.factory.SingletonFactory;
 import org.junit.Test;
 
@@ -22,14 +23,14 @@ public class SocketRpcTest {
 
     @Test
     public void testClient() {
-        SocketRpcClient socketRpcClient = new SocketRpcClient(SingletonFactory.getInstance(LocalServiceDiscovery.class));
+        SocketRpcClient socketRpcClient = new SocketRpcClient();
         RpcRequest rpcRequest = RpcRequest.builder()
                 .interfaceName("love.pangteen.proxy_demo.SmsService")
                 .methodName("send")
                 .parameters(new Object[]{"hello"})
                 .paramTypes(new Class[]{String.class})
                 .build();
-        Object result = socketRpcClient.sendRpcRequest(rpcRequest);
+        Object result = socketRpcClient.sendRpcRequest(rpcRequest, Util.localAddress(6666));
         System.out.println(result);
     }
 }

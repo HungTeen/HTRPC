@@ -44,4 +44,6 @@ public interface Constants {
      */
     String CONFIG_PATH = "htrpc.properties";
 
+    String DIRECT_URL_PREFIX = "htrpc://";
+
 }

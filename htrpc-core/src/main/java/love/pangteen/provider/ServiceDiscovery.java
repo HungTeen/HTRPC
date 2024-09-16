@@ -3,6 +3,7 @@ package love.pangteen.provider;
 import love.pangteen.annotations.SPI;
 
 import java.net.InetSocketAddress;
+import java.util.List;
 
 /**
  * 服务发现接口。
@@ -19,4 +20,5 @@ public interface ServiceDiscovery {
      * @return service address.
      */
     InetSocketAddress lookupService(String rpcServiceName);
+
 }
